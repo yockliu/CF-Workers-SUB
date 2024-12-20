@@ -78,8 +78,27 @@ export default {
 			let 重新汇总所有链接 = await ADD(MainData + '\n' + urls.join('\n'));
 			let 自建节点 ="";
 			let 订阅链接 ="";
+			
+			// 获取当前日期
+			var date = new Date();
+			var year = date.getFullYear();
+			// 获取当前月份
+			var nowMonth = date.getMonth() + 1;
+			// 获取当前是几号
+			var strDate = date.getDate();
+			// 对月份进行处理，1-9月在前面添加一个“0”
+			if (nowMonth >= 1 && nowMonth <= 9) {
+			   nowMonth = "0" + nowMonth;
+			}
+			// 对月份进行处理，1-9号在前面添加一个“0”
+			if (strDate >= 0 && strDate <= 9) {
+			   strDate = "0" + strDate;
+			}
 			for (let x of 重新汇总所有链接) {
 				if (x.toLowerCase().startsWith('http')) {
+					x.replace("${year}", year);
+					x.replace("${month}", nowMonth);
+					x.replace("${date}", strDate);
 					订阅链接 += x + '\n';
 				} else {
 					自建节点 += x + '\n';
@@ -313,7 +332,7 @@ function clashFix(content) {
 	let result = "";
 	for (let line of lines) {
 		if (line.includes('cipher: ss')) {
-			continue;
+			result += line.replace('cipher: ss', 'cipher: aes-256-cfb') + '\n';
 		}
 		if (line.includes('type: wireguard')) {
 			const 备改内容 = `, mtu: 1280, udp: true`;
