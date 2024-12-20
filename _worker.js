@@ -312,7 +312,7 @@ function clashFix(content) {
 
 	let result = "";
 	for (let line of lines) {
-		if (line.includes('cipher: ss') {
+		if (line.includes('cipher: ss')) {
 			continue;
 		}
 		if (line.includes('type: wireguard')) {
