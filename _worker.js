@@ -96,9 +96,9 @@ export default {
 			}
 			for (let x of 重新汇总所有链接) {
 				if (x.toLowerCase().startsWith('http')) {
-					x.replace("${year}", year);
-					x.replace("${month}", nowMonth);
-					x.replace("${date}", strDate);
+					x = x.replace("${year}", year);
+					x = x.replace("${month}", nowMonth);
+					x = x.replace("${date}", strDate);
 					订阅链接 += x + '\n';
 				} else {
 					自建节点 += x + '\n';
@@ -333,14 +333,15 @@ function clashFix(content) {
 	for (let line of lines) {
 		if (line.includes('cipher: ss')) {
 			result += line.replace('cipher: ss', 'cipher: aes-256-cfb') + '\n';
-		}
+			continue;
+		} 
 		if (line.includes('type: wireguard')) {
 			const 备改内容 = `, mtu: 1280, udp: true`;
 			const 正确内容 = `, mtu: 1280, remote-dns-resolve: true, udp: true`;
 			result += line.replace(new RegExp(备改内容, 'g'), 正确内容) + '\n';
-		} else {
-			result += line + '\n';
+			continue;
 		}
+		result += line + '\n';
 	}
 
 	content = result;
