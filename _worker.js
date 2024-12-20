@@ -303,27 +303,28 @@ async function MD5MD5(text) {
 }
 
 function clashFix(content) {
-	if(content.includes('wireguard') && !content.includes('remote-dns-resolve')){
-		let lines;
-		if (content.includes('\r\n')){
-			lines = content.split('\r\n');
-		} else {
-			lines = content.split('\n');
-		}
-	
-		let result = "";
-		for (let line of lines) {
-			if (line.includes('type: wireguard')) {
-				const 备改内容 = `, mtu: 1280, udp: true`;
-				const 正确内容 = `, mtu: 1280, remote-dns-resolve: true, udp: true`;
-				result += line.replace(new RegExp(备改内容, 'g'), 正确内容) + '\n';
-			} else {
-				result += line + '\n';
-			}
-		}
-
-		content = result;
+	let lines;
+	if (content.includes('\r\n')){
+		lines = content.split('\r\n');
+	} else {
+		lines = content.split('\n');
 	}
+
+	let result = "";
+	for (let line of lines) {
+		if (line.includes('cipher: ss') {
+			continue;
+		}
+		if (line.includes('type: wireguard')) {
+			const 备改内容 = `, mtu: 1280, udp: true`;
+			const 正确内容 = `, mtu: 1280, remote-dns-resolve: true, udp: true`;
+			result += line.replace(new RegExp(备改内容, 'g'), 正确内容) + '\n';
+		} else {
+			result += line + '\n';
+		}
+	}
+
+	content = result;
 	return content;
 }
 
