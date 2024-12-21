@@ -96,9 +96,9 @@ export default {
 			}
 			for (let x of 重新汇总所有链接) {
 				if (x.toLowerCase().startsWith('http')) {
-					x = x.replace("${year}", year);
-					x = x.replace("${month}", nowMonth);
-					x = x.replace("${date}", strDate);
+					x = x.replace(new RegExp('${year}', 'g'), year);
+					x = x.replace(new RegExp('${month}', 'g'), nowMonth);
+					x = x.replace(new RegExp('${date}', 'g'), strDate);
 					订阅链接 += x + '\n';
 				} else {
 					自建节点 += x + '\n';
